@@ -1,0 +1,35 @@
+# === Memoria provisional e indices reconstruibles (DEC-T05) ===
+Memoria-Pendiente/
+Indices/
+
+# === Entorno Python y caches locales ===
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# === Obsidian: excluir estado local de interfaz y caches ===
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.trash/
+
+# === Credenciales, tokens, logs y archivos temporales ===
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+*.log
+*.tmp
+*.bak
+*secret*
+*token*
+*credential*
+
+# === Sistema operativo ===
+.DS_Store
+Thumbs.db
+desktop.ini

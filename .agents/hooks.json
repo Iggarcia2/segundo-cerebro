@@ -1,0 +1,17 @@
+{
+  "memory-write-guard": {
+    "enabled": true,
+    "PreToolUse": [
+      {
+        "matcher": "write_file|edit_file|run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "..\\.venv\\Scripts\\python.exe ..\\scripts\\hook_guard.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

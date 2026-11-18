@@ -1,0 +1,158 @@
+{
+  "schema_version": "1.0",
+  "classes": {
+    "persona": {
+      "prefix": "per",
+      "folder": "Conocimiento/Personas",
+      "subtipos": [null, "contacto", "especialista", "colaborador", "referente"]
+    },
+    "organizacion": {
+      "prefix": "org",
+      "folder": "Conocimiento/Organizaciones",
+      "subtipos": [null, "empresa", "taller", "proveedor", "institucion", "cliente"]
+    },
+    "proyecto": {
+      "prefix": "pro",
+      "folder": "Conocimiento/Proyectos",
+      "subtipos": [null, "personal", "profesional", "ingenieria"]
+    },
+    "conocimiento": {
+      "prefix": "con",
+      "folder": "Conocimiento/Conocimientos",
+      "subtipos": [null, "capacidad", "habilidad", "metodo", "aprendizaje", "idea", "norma"]
+    },
+    "necesidad": {
+      "prefix": "nec",
+      "folder": "Conocimiento/Necesidades",
+      "subtipos": [null, "tecnica", "material", "servicio", "personal", "compra"]
+    },
+    "recurso": {
+      "prefix": "rec",
+      "folder": "Conocimiento/Recursos",
+      "subtipos": [null, "equipo", "herramienta", "material", "presupuesto", "tiempo"]
+    },
+    "documento": {
+      "prefix": "doc",
+      "folder": "Conocimiento/Documentos",
+      "subtipos": [null, "plano", "especificacion", "entregable", "presupuesto", "nota_tecnica", "acta"]
+    },
+    "accion": {
+      "prefix": "acc",
+      "folder": "Conocimiento/Acciones",
+      "subtipos": [null, "tarea", "seguimiento", "compra", "gestion"]
+    },
+    "decision": {
+      "prefix": "dec",
+      "folder": "Conocimiento/Decisiones",
+      "subtipos": [null, "tecnica", "compra", "alcance", "personal"]
+    },
+    "evento": {
+      "prefix": "eve",
+      "folder": "Historia/Eventos",
+      "subtipos": [null, "reunion", "cambio_estado", "correccion", "hito", "incidente"]
+    }
+  },
+  "enums": {
+    "ambito": ["personal", "profesional", "ingenieria", "transversal"],
+    "estado": ["activo", "inactivo", "cerrado", "pendiente", "bloqueado", "historico", "desconocido"],
+    "evidencia": ["confirmada", "reportada", "inferida"],
+    "confianza": ["alta", "media", "baja"],
+    "vigencia": ["vigente", "historica", "desconocida", "disputada"],
+    "prioridad": [null, "alta", "media", "baja"],
+    "estado_decision": ["propuesta", "aprobada", "reemplazada"],
+    "estado_revision": [null, "borrador", "en_revision", "aprobado", "obsoleto"]
+  },
+  "predicates": {
+    "tiene_capacidad": {
+      "origen": ["persona", "organizacion"],
+      "destino": ["conocimiento"],
+      "inversa": "capacidad_de",
+      "aciclico": false
+    },
+    "trabaja_en": {
+      "origen": ["persona"],
+      "destino": ["organizacion"],
+      "inversa": "emplea_o_vincula_a",
+      "aciclico": false
+    },
+    "participa_en": {
+      "origen": ["persona", "organizacion"],
+      "destino": ["proyecto", "evento"],
+      "inversa": "cuenta_con",
+      "aciclico": false
+    },
+    "requiere": {
+      "origen": ["necesidad", "proyecto", "accion"],
+      "destino": ["conocimiento", "recurso", "documento"],
+      "inversa": "requerido_por",
+      "aciclico": false
+    },
+    "satisface": {
+      "origen": ["recurso", "conocimiento", "documento", "persona"],
+      "destino": ["necesidad"],
+      "inversa": "satisfecha_por",
+      "aciclico": false
+    },
+    "depende_de": {
+      "origen": ["accion", "documento", "proyecto", "necesidad", "decision"],
+      "destino": ["accion", "documento", "proyecto", "decision", "recurso"],
+      "inversa": "prerequisito_de",
+      "aciclico": true
+    },
+    "habilita_a": {
+      "origen": ["documento", "decision", "evento", "accion"],
+      "destino": ["documento", "accion", "proyecto"],
+      "inversa": "habilitado_por",
+      "aciclico": false
+    },
+    "responsable_de": {
+      "origen": ["persona", "organizacion"],
+      "destino": ["accion", "documento", "proyecto", "necesidad"],
+      "inversa": "a_cargo_de",
+      "aciclico": false
+    },
+    "afecta_a": {
+      "origen": ["decision", "evento"],
+      "destino": ["proyecto", "persona", "organizacion", "documento", "necesidad", "recurso", "accion"],
+      "inversa": "afectado_por",
+      "aciclico": false
+    },
+    "relacionado_con": {
+      "origen": ["*"],
+      "destino": ["*"],
+      "inversa": "relacionado_con",
+      "aciclico": false
+    }
+  },
+  "required_node_fields": [
+    "schema_version",
+    "id",
+    "tipo",
+    "subtipo",
+    "titulo",
+    "aliases",
+    "ambito",
+    "estado",
+    "creado_el",
+    "actualizado_el",
+    "ocurrio_el",
+    "registrado_el",
+    "evidencia",
+    "fuente",
+    "confianza",
+    "relaciones"
+  ],
+  "required_relation_fields": [
+    "id",
+    "predicado",
+    "destino_id",
+    "destino",
+    "evidencia",
+    "fuente",
+    "registrado_el",
+    "ocurrio_el",
+    "vigente_desde",
+    "vigente_hasta",
+    "vigencia"
+  ]
+}
