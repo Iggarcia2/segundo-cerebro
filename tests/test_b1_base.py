@@ -217,3 +217,12 @@ def test_cli_read_only_prevents_writes(tmp_path: Path) -> None:
     assert cli_main(["--root", str(vault), "--read-only", "new-id", "persona"]) == 0
     assert not registry.exists()
     assert cli_main(["--root", str(vault), "--read-only", "rebuild-ids"]) == 2
+
+
+def test_parse_markdown_note_handles_utf8_bom(tmp_path: Path) -> None:
+    vault = _copy_vault_to_tmp(tmp_path)
+    juan_path = vault / "Conocimiento" / "Personas" / "Juan Garcia.md"
+    raw = juan_path.read_text(encoding="utf-8")
+    juan_path.write_bytes(b"\xef\xbb\xbf" + raw.encode("utf-8"))
+    report = VaultValidator(vault).validate_all()
+    assert report.is_valid, [i.to_dict() for i in report.errors]

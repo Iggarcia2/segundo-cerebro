@@ -38,8 +38,8 @@ def _normalize_yaml_dates(obj: Any) -> Any:
 
 
 def parse_markdown_note(path: Path) -> NoteDocument:
-    """Lee un archivo Markdown UTF-8 y separa su frontmatter YAML."""
-    content = path.read_text(encoding="utf-8")
+    """Lee un archivo Markdown UTF-8 (con o sin BOM) y separa su frontmatter YAML."""
+    content = path.read_text(encoding="utf-8-sig")
     lines = content.splitlines(keepends=True)
     if not lines or lines[0].strip() != "---":
         raise ValueError(f"Falta delimitador inicial '---' de frontmatter en {path}")
